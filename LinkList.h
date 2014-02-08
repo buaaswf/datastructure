@@ -228,20 +228,91 @@ LinkList MERGELIST(LinkList lista,LinkList listb)
 {
 
 	LinkList listc, p = lista, q = listb, r;
+	if (lista->data <= listb->data)
+	{
+		listc =lista;
+		r = lista;
+		p =lista->next;
+	} 
+	else
+	{
+		listc = listb;
+		r = listb;
+		q= listb->next;
+
+	}
+	while (p != NULL && q !=NULL)
+	{
+		if ( p->data <= q->data)
+		{
+			r->next = p; // r next pointer to the p
+			r = p;  //r moves next
+			p = p->next;
+		} 
+		else
+		{
+			r->next = q; //r next pointer to the q
+			r = q; // r move next
+			q= q->next;
+		}
+		r->next = p? p:q;
+	}
 	
 	return listc;
 }
-//copy the list
+//copy the list recursive version
 LinkList COPY(LinkList lista)
 {
-	return lista;
+	LinkList listb;
+	if ( lista == NULL)
+	{
+		return NULL;
+	} 
+	else
+	{
+		listb = (LinkList) malloc(sizeof(Node));
+		listb->data = lista->data;
+		listb->next= COPY(lista->next);
+	}
+	return listb;
 }
+// while version
+LinkList COPY2(LinkList lista)
+{
+	LinkList listb;
+	if ( lista == NULL)
+	{
+		return NULL;
+	} 
+	else
+	{
+		while (lista)
+		{
+			listb = (LinkList)malloc(sizeof(Node));
+			listb->data =lista->data;
+			lista = lista->next;
+		}
 
+	}
+	return listb;
+}
 //
 void LINKSORT(ElementType A[],int n)
 {
-
-
+	LinkList p,list = NULL;
+	int i;
+	for ( i=0; i < n; i++)
+	{
+		INSERTLINKODR(list,A[i]);
+	}
+	p = list;
+	i =0;
+	while(p !=NULL)
+	{
+		A[i++]=p->data;
+		p = p->next;
+	
+	}
 }
 
 void printlist(LinkList list)

@@ -1,5 +1,5 @@
 //
-#include "DataStruct.h"
+#include "LinkList.h"
 int main()
 {
 	LinkList l = CREAT(4);
